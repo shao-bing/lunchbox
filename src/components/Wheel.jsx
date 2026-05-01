@@ -70,7 +70,7 @@ function Wheel({ items, rotation, isSpinning, onStart }) {
       <button
         onClick={onStart}
         disabled={isSpinning || items.length < 2}
-        className="spin-btn-glow mt-8 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-fuchsia-400 px-9 py-2.5 font-black tracking-wide text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:from-slate-700 disabled:via-slate-700 disabled:to-slate-700 disabled:text-slate-400"
+        className="spin-btn-glow spin-btn-safari mt-8 rounded-xl border border-cyan-300/70 bg-cyan-400 px-9 py-2.5 font-black tracking-wide text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:border-slate-600 disabled:bg-slate-700 disabled:text-slate-400"
       >
         {isSpinning ? "旋转中..." : "开始抽选"}
       </button>

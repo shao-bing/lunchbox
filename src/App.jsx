@@ -6,6 +6,7 @@ import Wheel from "./components/Wheel";
 const STORAGE_KEY = "lunch-decider-items";
 const SPIN_DURATION_MS = 3000;
 const POINTER_ANGLE = 270; // 顶部指针在“右侧为0°”坐标中的角度
+const DEFAULT_ITEMS = ["汉堡", "水饺", "生煎", "快餐", "嗦粉"];
 
 function App() {
   const [items, setItems] = useState([]);
@@ -18,14 +19,19 @@ function App() {
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
+    if (!saved) {
+      setItems(DEFAULT_ITEMS);
+      return;
+    }
     try {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) {
-        setItems(parsed.filter((item) => typeof item === "string" && item.trim()));
+        const cleaned = parsed.filter((item) => typeof item === "string" && item.trim());
+        setItems(cleaned.length ? cleaned : DEFAULT_ITEMS);
       }
     } catch {
       localStorage.removeItem(STORAGE_KEY);
+      setItems(DEFAULT_ITEMS);
     }
   }, []);
 

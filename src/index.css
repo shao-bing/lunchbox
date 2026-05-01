@@ -78,6 +78,28 @@ body {
   box-shadow: none;
 }
 
+.spin-btn-safari {
+  background-image: linear-gradient(90deg, #22d3ee, #38bdf8, #e879f9);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.modal-add-btn {
+  background-image: linear-gradient(90deg, #22d3ee, #e879f9);
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 72px;
+}
+
+.result-confirm-btn {
+  background-image: linear-gradient(90deg, #67e8f9, #22d3ee, #c4b5fd);
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow:
+    0 10px 30px rgba(34, 211, 238, 0.38),
+    0 0 0 2px rgba(103, 232, 249, 0.18) inset;
+}
+
 .wheel-stop-flash {
   animation: stopFlash 550ms ease-out;
 }

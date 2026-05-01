@@ -31,7 +31,7 @@ function ResultModal({ isOpen, result, onClose }) {
         </h3>
         <button
           onClick={onClose}
-          className="mt-6 rounded-xl bg-gradient-to-r from-cyan-400 to-fuchsia-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110"
+          className="result-confirm-btn mt-6 rounded-xl border border-cyan-200/80 bg-cyan-300 px-6 py-2.5 text-base font-black text-slate-950 transition hover:brightness-110"
         >
           太棒了
         </button>

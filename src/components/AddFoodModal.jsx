@@ -40,7 +40,7 @@ function AddFoodModal({ isOpen, onClose, onAdd }) {
             </button>
             <button
               type="submit"
-              className="rounded-xl bg-gradient-to-r from-cyan-400 to-fuchsia-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110"
+              className="modal-add-btn rounded-xl border border-cyan-300/70 bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110"
             >
               添加
             </button>
