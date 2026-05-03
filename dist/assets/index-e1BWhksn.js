@@ -7013,7 +7013,7 @@ function AddFoodModal({ isOpen, onClose, onAdd }) {
     onAdd(normalized);
     setValue("");
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass w-full max-w-md rounded-3xl p-6", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass w-full max-w-md rounded-3xl p-6", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-semibold text-slate-100", children: "添加午餐选项" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-1 text-sm text-slate-400", children: "输入一个你想吃的美食。" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "mt-5 space-y-4", onSubmit: handleSubmit, children: [
@@ -7044,7 +7044,7 @@ function AddFoodModal({ isOpen, onClose, onAdd }) {
           "button",
           {
             type: "submit",
-            className: "rounded-xl bg-gradient-to-r from-cyan-400 to-fuchsia-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110",
+            className: "modal-add-btn rounded-xl border border-cyan-300/70 bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110",
             children: "添加"
           }
         )
@@ -7054,14 +7054,15 @@ function AddFoodModal({ isOpen, onClose, onAdd }) {
 }
 function ResultModal({ isOpen, result, onClose }) {
   if (!isOpen) return null;
-  const particles = Array.from({ length: 22 }, (_, index) => ({
+  const particleCount = 10;
+  const particles = Array.from({ length: particleCount }, (_, index) => ({
     id: index,
-    angle: `${360 / 22 * index}deg`,
+    angle: `${360 / particleCount * index}deg`,
     distance: `${84 + index % 5 * 10}px`,
     delay: `${index % 6 * 50}ms`,
     color: ["#22d3ee", "#a78bfa", "#f472b6", "#34d399", "#f59e0b"][index % 5]
   }));
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass relative w-full max-w-sm overflow-hidden rounded-3xl p-6 text-center", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass relative w-full max-w-sm overflow-hidden rounded-3xl p-6 text-center", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none absolute inset-0", children: particles.map((particle) => /* @__PURE__ */ jsxRuntimeExports.jsx(
       "span",
       {
@@ -7081,7 +7082,7 @@ function ResultModal({ isOpen, result, onClose }) {
       "button",
       {
         onClick: onClose,
-        className: "mt-6 rounded-xl bg-gradient-to-r from-cyan-400 to-fuchsia-400 px-5 py-2 text-sm font-semibold text-slate-950 transition hover:brightness-110",
+        className: "result-confirm-btn mt-6 rounded-xl border border-cyan-200/80 bg-cyan-300 px-6 py-2.5 text-base font-black text-slate-950 transition hover:brightness-110",
         children: "太棒了"
       }
     )
@@ -7110,9 +7111,16 @@ function buildWheelGradient(items) {
 }
 function Wheel({ items, rotation, isSpinning, onStart }) {
   const sector = items.length ? 360 / items.length : 0;
+  const RADIUS_PERCENT = 35;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex w-full flex-col items-center", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative h-80 w-80 select-none sm:h-96 sm:w-96", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "wheel-aura absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.24),transparent_65%)] blur-xl" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          "aria-hidden": true,
+          className: "absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.2),transparent_72%)] opacity-90"
+        }
+      ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
@@ -7134,15 +7142,20 @@ function Wheel({ items, rotation, isSpinning, onStart }) {
             transition: isSpinning ? "transform 3000ms cubic-bezier(0.22, 1, 0.36, 1)" : "none"
           },
           children: items.map((item, index) => {
-            const labelRotation = index * sector + sector / 2;
+            const cssAngleDeg = 90 + index * sector + sector / 2;
+            const cssAngleRad = cssAngleDeg * Math.PI / 180;
+            const x2 = 50 + RADIUS_PERCENT * Math.sin(cssAngleRad);
+            const y2 = 50 - RADIUS_PERCENT * Math.cos(cssAngleRad);
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
-                className: "absolute left-1/2 top-1/2 w-1/2 origin-left",
+                className: "absolute",
                 style: {
-                  transform: `translateY(-50%) rotate(${labelRotation}deg)`
+                  left: `${x2}%`,
+                  top: `${y2}%`,
+                  transform: `translate(-50%, -50%)`
                 },
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-5 block -rotate-90 truncate text-sm font-extrabold text-slate-900 drop-shadow-[0_1px_1px_rgba(255,255,255,0.35)] sm:text-base", children: item })
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "block whitespace-nowrap text-sm font-extrabold text-slate-900 drop-shadow-[0_1px_1px_rgba(255,255,255,0.35)] sm:text-base", children: item })
               },
               `${item}-${index}`
             );
@@ -7156,7 +7169,7 @@ function Wheel({ items, rotation, isSpinning, onStart }) {
       {
         onClick: onStart,
         disabled: isSpinning || items.length < 2,
-        className: "spin-btn-glow mt-8 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-400 to-fuchsia-400 px-9 py-2.5 font-black tracking-wide text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:from-slate-700 disabled:via-slate-700 disabled:to-slate-700 disabled:text-slate-400",
+        className: "spin-btn-glow spin-btn-safari mt-8 rounded-xl border border-cyan-300/70 bg-cyan-400 px-9 py-2.5 font-black tracking-wide text-slate-950 transition hover:brightness-110 disabled:cursor-not-allowed disabled:border-slate-600 disabled:bg-slate-700 disabled:text-slate-400",
         children: isSpinning ? "旋转中..." : "开始抽选"
       }
     ),
@@ -7166,6 +7179,7 @@ function Wheel({ items, rotation, isSpinning, onStart }) {
 const STORAGE_KEY = "lunch-decider-items";
 const SPIN_DURATION_MS = 3e3;
 const POINTER_ANGLE = 270;
+const DEFAULT_ITEMS = ["汉堡", "水饺", "生煎", "快餐", "嗦粉"];
 function App() {
   const [items, setItems] = reactExports.useState([]);
   const [rotation, setRotation] = reactExports.useState(0);
@@ -7174,21 +7188,34 @@ function App() {
   const [isResultOpen, setIsResultOpen] = reactExports.useState(false);
   const [result, setResult] = reactExports.useState("");
   const [isWheelFlash, setIsWheelFlash] = reactExports.useState(false);
+  const spinTimersRef = reactExports.useRef([]);
   reactExports.useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
+    if (!saved) {
+      setItems(DEFAULT_ITEMS);
+      return;
+    }
     try {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) {
-        setItems(parsed.filter((item) => typeof item === "string" && item.trim()));
+        const cleaned = parsed.filter((item) => typeof item === "string" && item.trim());
+        setItems(cleaned.length ? cleaned : DEFAULT_ITEMS);
       }
     } catch {
       localStorage.removeItem(STORAGE_KEY);
+      setItems(DEFAULT_ITEMS);
     }
   }, []);
   reactExports.useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
+  reactExports.useEffect(
+    () => () => {
+      spinTimersRef.current.forEach(clearTimeout);
+      spinTimersRef.current = [];
+    },
+    []
+  );
   const normalizedItems = reactExports.useMemo(
     () => items.map((item) => item.trim()).filter(Boolean),
     [items]
@@ -7214,17 +7241,21 @@ function App() {
     const delta = (targetAngle - currentAngle + 360) % 360;
     const fullSpins = 360 * 8;
     const finalRotation = rotation + fullSpins + delta;
+    spinTimersRef.current.forEach(clearTimeout);
+    spinTimersRef.current = [];
     setIsSpinning(true);
     setIsResultOpen(false);
     setIsAddOpen(false);
     setRotation(finalRotation);
-    window.setTimeout(() => {
+    const t1 = window.setTimeout(() => {
       setResult(snapshot[selectedIndex]);
       setIsSpinning(false);
       setIsWheelFlash(true);
       setIsResultOpen(true);
-      window.setTimeout(() => setIsWheelFlash(false), 550);
+      const t2 = window.setTimeout(() => setIsWheelFlash(false), 550);
+      spinTimersRef.current.push(t2);
     }, SPIN_DURATION_MS);
+    spinTimersRef.current.push(t1);
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { className: "relative mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-10 sm:px-8", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "starfield" }),

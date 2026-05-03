@@ -29,17 +29,17 @@ body {
   min-height: 100vh;
 }
 
+/* 避免多层 backdrop-filter：Safari 上极易占满 GPU 内存并拖垮整页 */
 .glass {
   background: linear-gradient(
     180deg,
-    rgba(15, 23, 42, 0.8) 0%,
-    rgba(2, 6, 23, 0.7) 100%
+    rgba(15, 23, 42, 0.92) 0%,
+    rgba(2, 6, 23, 0.88) 100%
   );
   border: 1px solid rgba(148, 163, 184, 0.2);
   box-shadow:
     0 18px 45px rgba(2, 132, 199, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px);
 }
 
 .neon-text {
@@ -52,25 +52,21 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
+  z-index: 0;
   background-image:
     radial-gradient(2px 2px at 20% 30%, rgba(125, 211, 252, 0.65), transparent),
     radial-gradient(2px 2px at 80% 20%, rgba(196, 181, 253, 0.6), transparent),
     radial-gradient(1.5px 1.5px at 40% 75%, rgba(110, 231, 183, 0.5), transparent),
     radial-gradient(1px 1px at 70% 60%, rgba(244, 114, 182, 0.5), transparent),
     radial-gradient(1px 1px at 55% 40%, rgba(147, 197, 253, 0.55), transparent);
-  animation: twinkle 8s ease-in-out infinite alternate;
-  opacity: 0.75;
-}
-
-.wheel-aura {
-  animation: auraPulse 2.2s ease-in-out infinite;
+  opacity: 0.55;
+  contain: strict;
 }
 
 .spin-btn-glow {
   box-shadow:
     0 8px 28px rgba(34, 211, 238, 0.35),
-    0 0 0 rgba(236, 72, 153, 0.45);
-  animation: pulseGlow 1.8s ease-in-out infinite;
+    0 0 0 1px rgba(236, 72, 153, 0.12);
 }
 
 .spin-btn-glow:disabled {
@@ -115,45 +111,6 @@ body {
   animation: burst 900ms ease-out forwards;
 }
 
-@keyframes twinkle {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateY(-6px) scale(1.02);
-    opacity: 0.9;
-  }
-}
-
-@keyframes auraPulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.04);
-    opacity: 1;
-  }
-}
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    transform: translateY(0);
-    box-shadow:
-      0 8px 28px rgba(34, 211, 238, 0.35),
-      0 0 0 0 rgba(236, 72, 153, 0.42);
-  }
-  50% {
-    transform: translateY(-1px);
-    box-shadow:
-      0 10px 32px rgba(34, 211, 238, 0.45),
-      0 0 0 8px rgba(236, 72, 153, 0);
-  }
-}
-
 @keyframes burst {
   0% {
     transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(0.7);
@@ -184,5 +141,13 @@ body {
       0 18px 45px rgba(2, 132, 199, 0.16),
       inset 0 1px 0 rgba(255, 255, 255, 0.06);
     transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield,
+  .wheel-stop-flash,
+  .particle {
+    animation: none !important;
   }
 }

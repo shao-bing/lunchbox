@@ -18,17 +18,20 @@ function buildWheelGradient(items) {
     const color = COLORS[index % COLORS.length];
     return `${color} ${start}deg ${end}deg`;
   });
-  // 明确设置起始方向为右侧(3点钟方向)，与标签旋转坐标保持一致
   return `conic-gradient(from 90deg, ${segments.join(", ")})`;
 }
 
 function Wheel({ items, rotation, isSpinning, onStart }) {
   const sector = items.length ? 360 / items.length : 0;
+  const RADIUS_PERCENT = 35;
 
   return (
     <div className="flex w-full flex-col items-center">
       <div className="relative h-80 w-80 select-none sm:h-96 sm:w-96">
-        <div className="wheel-aura absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.24),transparent_65%)] blur-xl" />
+        <div
+          aria-hidden
+          className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.2),transparent_72%)] opacity-90"
+        />
         <div
           className="absolute inset-2 rounded-full border border-fuchsia-300/35"
           style={{
@@ -48,16 +51,23 @@ function Wheel({ items, rotation, isSpinning, onStart }) {
           }}
         >
           {items.map((item, index) => {
-            const labelRotation = index * sector + sector / 2;
+            // 扇区中心在 conic-gradient(from 90deg) 中的 CSS 角度
+            const cssAngleDeg = 90 + index * sector + sector / 2;
+            const cssAngleRad = cssAngleDeg * Math.PI / 180;
+            // CSS角度转数学坐标：x = sin(θ), y = -cos(θ)
+            const x = 50 + RADIUS_PERCENT * Math.sin(cssAngleRad);
+            const y = 50 - RADIUS_PERCENT * Math.cos(cssAngleRad);
             return (
               <div
                 key={`${item}-${index}`}
-                className="absolute left-1/2 top-1/2 w-1/2 origin-left"
+                className="absolute"
                 style={{
-                  transform: `translateY(-50%) rotate(${labelRotation}deg)`,
+                  left: `${x}%`,
+                  top: `${y}%`,
+                  transform: `translate(-50%, -50%)`,
                 }}
               >
-                <span className="ml-5 block -rotate-90 truncate text-sm font-extrabold text-slate-900 drop-shadow-[0_1px_1px_rgba(255,255,255,0.35)] sm:text-base">
+                <span className="block whitespace-nowrap text-sm font-extrabold text-slate-900 drop-shadow-[0_1px_1px_rgba(255,255,255,0.35)] sm:text-base">
                   {item}
                 </span>
               </div>

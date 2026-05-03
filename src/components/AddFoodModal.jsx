@@ -14,7 +14,7 @@ function AddFoodModal({ isOpen, onClose, onAdd }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4">
       <div className="glass w-full max-w-md rounded-3xl p-6">
         <h2 className="text-lg font-semibold text-slate-100">添加午餐选项</h2>
         <p className="mt-1 text-sm text-slate-400">输入一个你想吃的美食。</p>

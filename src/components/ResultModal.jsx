@@ -1,15 +1,16 @@
 function ResultModal({ isOpen, result, onClose }) {
   if (!isOpen) return null;
-  const particles = Array.from({ length: 22 }, (_, index) => ({
+  const particleCount = 10;
+  const particles = Array.from({ length: particleCount }, (_, index) => ({
     id: index,
-    angle: `${(360 / 22) * index}deg`,
+    angle: `${(360 / particleCount) * index}deg`,
     distance: `${84 + (index % 5) * 10}px`,
     delay: `${(index % 6) * 50}ms`,
     color: ["#22d3ee", "#a78bfa", "#f472b6", "#34d399", "#f59e0b"][index % 5],
   }));
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4">
       <div className="glass relative w-full max-w-sm overflow-hidden rounded-3xl p-6 text-center">
         <div className="pointer-events-none absolute inset-0">
           {particles.map((particle) => (

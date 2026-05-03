@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import AddFoodModal from "./components/AddFoodModal";
 import ResultModal from "./components/ResultModal";
 import Wheel from "./components/Wheel";
@@ -16,6 +16,7 @@ function App() {
   const [isResultOpen, setIsResultOpen] = useState(false);
   const [result, setResult] = useState("");
   const [isWheelFlash, setIsWheelFlash] = useState(false);
+  const spinTimersRef = useRef([]);
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -38,6 +39,14 @@ function App() {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
+
+  useEffect(
+    () => () => {
+      spinTimersRef.current.forEach(clearTimeout);
+      spinTimersRef.current = [];
+    },
+    [],
+  );
 
   const normalizedItems = useMemo(
     () => items.map((item) => item.trim()).filter(Boolean),
@@ -70,19 +79,24 @@ function App() {
     const fullSpins = 360 * 8;
     const finalRotation = rotation + fullSpins + delta;
 
+    spinTimersRef.current.forEach(clearTimeout);
+    spinTimersRef.current = [];
+
     setIsSpinning(true);
     setIsResultOpen(false);
     setIsAddOpen(false);
     setRotation(finalRotation);
 
-    window.setTimeout(() => {
+    const t1 = window.setTimeout(() => {
       // 结果以本次抽中的索引为准；角度已按同坐标系对齐到该扇区
       setResult(snapshot[selectedIndex]);
       setIsSpinning(false);
       setIsWheelFlash(true);
       setIsResultOpen(true);
-      window.setTimeout(() => setIsWheelFlash(false), 550);
+      const t2 = window.setTimeout(() => setIsWheelFlash(false), 550);
+      spinTimersRef.current.push(t2);
     }, SPIN_DURATION_MS);
+    spinTimersRef.current.push(t1);
   };
 
   return (
