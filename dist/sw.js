@@ -1201,13 +1201,13 @@ class Router {
    * the event's request.
    */
   addFetchListener() {
-    self.addEventListener("fetch", (event) => {
+    self.addEventListener("fetch", ((event) => {
       const { request } = event;
       const responsePromise = this.handleRequest({ request, event });
       if (responsePromise) {
         event.respondWith(responsePromise);
       }
-    });
+    }));
   }
   /**
    * Adds a message event listener for URLs to cache from the window.
@@ -1232,7 +1232,7 @@ class Router {
    * ```
    */
   addCacheListener() {
-    self.addEventListener("message", (event) => {
+    self.addEventListener("message", ((event) => {
       if (event.data && event.data.type === "CACHE_URLS") {
         const { payload } = event.data;
         const requestPromises = Promise.all(payload.urlsToCache.map((entry) => {
@@ -1247,7 +1247,7 @@ class Router {
           void requestPromises.then(() => event.ports[0].postMessage(true));
         }
       }
-    });
+    }));
   }
   /**
    * Apply the routing rules to a FetchEvent object to get a Response from an
@@ -1511,11 +1511,11 @@ const deleteOutdatedCaches = async (currentPrecacheName, substringToFind = SUBST
   return cacheNamesToDelete;
 };
 function cleanupOutdatedCaches() {
-  self.addEventListener("activate", (event) => {
+  self.addEventListener("activate", ((event) => {
     const cacheName = cacheNames.getPrecacheName();
     event.waitUntil(deleteOutdatedCaches(cacheName).then((cachesDeleted) => {
     }));
-  });
+  }));
 }
 function precache(entries) {
   const precacheController2 = getOrCreatePrecacheController();
@@ -1528,4 +1528,4 @@ function precacheAndRoute(entries, options) {
 self.skipWaiting();
 clientsClaim();
 cleanupOutdatedCaches();
-precacheAndRoute([{"revision":"1872c500de691dce40960bb85481de07","url":"registerSW.js"},{"revision":"9b2ff5c25377cb020cda9cdbbe831ef6","url":"index.html"},{"revision":"44a6f38326c5f8ea482d051ea813af1b","url":"icon-512.svg"},{"revision":"eaa7abb2edad6d86e264e6c7f4ac9d1f","url":"icon-192.svg"},{"revision":null,"url":"assets/index-e1BWhksn.js"},{"revision":null,"url":"assets/index-BX532XlZ.css"},{"revision":"eaa7abb2edad6d86e264e6c7f4ac9d1f","url":"icon-192.svg"},{"revision":"44a6f38326c5f8ea482d051ea813af1b","url":"icon-512.svg"},{"revision":"d30543bdc609053be18f420161c305d3","url":"manifest.webmanifest"}]);
+precacheAndRoute([{"revision":"1872c500de691dce40960bb85481de07","url":"registerSW.js"},{"revision":"069f6c84589bb2896d8dbfa50e7fb89f","url":"index.html"},{"revision":"44a6f38326c5f8ea482d051ea813af1b","url":"icon-512.svg"},{"revision":"eaa7abb2edad6d86e264e6c7f4ac9d1f","url":"icon-192.svg"},{"revision":null,"url":"assets/index-CTosrmrm.css"},{"revision":null,"url":"assets/index-CQJMKaqH.js"},{"revision":"eaa7abb2edad6d86e264e6c7f4ac9d1f","url":"icon-192.svg"},{"revision":"44a6f38326c5f8ea482d051ea813af1b","url":"icon-512.svg"},{"revision":"d30543bdc609053be18f420161c305d3","url":"manifest.webmanifest"}]);

@@ -353,10 +353,6 @@
     pointer-events: none;
   }
 
-  .visible {
-    visibility: visible;
-  }
-
   .absolute {
     position: absolute;
   }
@@ -457,10 +453,6 @@
     display: grid;
   }
 
-  .hidden {
-    display: none;
-  }
-
   .inline-flex {
     display: inline-flex;
   }
@@ -525,10 +517,6 @@
 
   .transform {
     transform: var(--tw-rotate-x, ) var(--tw-rotate-y, ) var(--tw-rotate-z, ) var(--tw-skew-x, ) var(--tw-skew-y, );
-  }
-
-  .resize {
-    resize: both;
   }
 
   .flex-col {
@@ -940,11 +928,6 @@
   .shadow-\[0_0_45px_rgba\(34\,211\,238\,0\.26\)\] {
     --tw-shadow: 0 0 45px var(--tw-shadow-color, #22d3ee42);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-
-  .blur {
-    --tw-blur: blur(8px);
-    filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
   }
 
   .drop-shadow-\[0_0_14px_rgba\(34\,211\,238\,0\.8\)\] {
