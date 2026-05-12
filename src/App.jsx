@@ -104,13 +104,13 @@ function App() {
       <div className="starfield" />
       <header className="relative z-10 mb-8 text-center">
         <p className="inline-flex items-center rounded-full border border-cyan-400/40 bg-cyan-400/10 px-3 py-1 text-xs font-semibold tracking-[0.2em] text-cyan-200">
-          午餐决策器
+          快乐午餐
         </p>
         <h1 className="neon-text mt-4 text-4xl font-black tracking-tight text-slate-100 sm:text-5xl">
           今天中午吃什么
         </h1>
         <p className="mt-3 text-slate-300">
-          加入你想吃的选项，转动命运之轮，一键决定午餐。
+          加入你想吃的选项，一键转动决定午餐，从此不再纠结。
         </p>
       </header>
 
